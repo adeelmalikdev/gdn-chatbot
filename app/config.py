@@ -18,6 +18,9 @@ class Settings(BaseSettings):
     llm_api_key: SecretStr | None = None
     xai_api_key: SecretStr | None = None
     redis_url: str | None = None
+    langchain_tracing_v2: bool = False
+    langchain_api_key: SecretStr | None = None
+    langchain_project: str = "gdn-chatbot"
     # Environment variables for complex types are JSON-decoded by default.  This
     # explicitly keeps the friendly comma-separated .env format instead.
     allowed_origins: Annotated[list[str], NoDecode] = Field(

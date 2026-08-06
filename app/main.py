@@ -1,4 +1,5 @@
 import logging
+import os
 import time
 from contextlib import asynccontextmanager
 
@@ -16,6 +17,11 @@ from app.security import reject_prompt_injection
 
 logging.basicConfig(level=logging.INFO)
 settings = get_settings()
+
+if settings.langchain_api_key:
+    os.environ["LANGCHAIN_TRACING_V2"] = "true"
+    os.environ["LANGCHAIN_API_KEY"] = settings.langchain_api_key.get_secret_value()
+    os.environ["LANGCHAIN_PROJECT"] = settings.langchain_project
 
 limiter_kwargs = {"key_func": get_remote_address}
 if settings.redis_url:
