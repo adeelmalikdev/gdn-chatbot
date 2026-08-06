@@ -21,15 +21,15 @@ def main() -> None:
         return
 
     data = json.loads(report_file.read_text(encoding="utf-8"))
-    print(f"\n==================================================")
-    print(f"       GDN Chatbot Benchmark Summary              ")
-    print(f"==================================================")
+    print("\n==================================================")
+    print("       GDN Chatbot Benchmark Summary              ")
+    print("==================================================")
     print(f" Report File : {report_file.name}")
     print(f" Created At  : {data.get('created_at', 'Unknown')}")
     print(f" Total Cases : {data.get('total', 0)}")
     print(f" Passed      : {data.get('passed', 0)}")
     print(f" Score       : {data.get('score', 0)}%")
-    print(f"==================================================\n")
+    print("==================================================\n")
 
     results = data.get("results", [])
     failed = [r for r in results if not r.get("passed")]

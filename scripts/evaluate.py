@@ -42,7 +42,7 @@ def evaluate(case: dict, settings) -> dict:
         }
     except HTTPException:
         return {"id": case["id"], "passed": expected_rejection, "reason": "Request rejected as expected"}
-    except Exception as error:  # Surface provider/retrieval faults in the report.
+    except Exception as error:  # noqa: BLE001 # Surface provider/retrieval faults in the report.
         return {"id": case["id"], "passed": False, "reason": f"{type(error).__name__}: {error}"}
 
 
@@ -64,7 +64,7 @@ def main() -> None:
         "score": round(passed / len(results) * 100, 1) if results else 0, "results": results,
     }
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
-    report_path = REPORTS_DIR / f"gdn-eval-{datetime.now().strftime('%Y%m%d-%H%M%S')}.json"
+    report_path = REPORTS_DIR / f"gdn-eval-{datetime.now(UTC).strftime('%Y%m%d-%H%M%S')}.json"
     report_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
     print(f"Quality score: {report['score']}% ({passed}/{len(results)})")
     print(f"Report: {report_path}")

@@ -1,7 +1,7 @@
 import json
+import re
 from collections.abc import Sequence
 from functools import lru_cache
-import re
 
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
@@ -100,7 +100,7 @@ def answer(question: str, history: list[ChatMessage], settings: Settings) -> tup
     try:
         response = get_chat_model(settings).invoke(messages)
         return str(response.content), _sources(docs) if should_include_sources(question) else []
-    except Exception:
+    except Exception:  # noqa: BLE001
         fallback_text = (
             "GDN Assistant is currently experiencing connection issues to the language model provider. "
             "Please try again in a few moments, or contact Global Digital Nexus directly via our contact page."
@@ -123,7 +123,7 @@ def answer_stream(question: str, history: list[ChatMessage], settings: Settings)
                 yield f"data: {json.dumps({'content': str(chunk.content)})}\n\n"
         yield f"data: {json.dumps({'sources': [s.model_dump() for s in sources]})}\n\n"
         yield "data: [DONE]\n\n"
-    except Exception:
+    except Exception:  # noqa: BLE001
         fallback_text = (
             "GDN Assistant is currently experiencing connection issues to the language model provider. "
             "Please try again in a few moments, or contact Global Digital Nexus directly via our contact page."

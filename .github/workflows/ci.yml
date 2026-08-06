@@ -30,5 +30,9 @@ jobs:
           ruff check .
 
       - name: Run Pytest
+        env:
+          XAI_API_KEY: mock-key-for-ci
+          FIRECRAWL_API_KEY: mock-key-for-ci
         run: |
           pytest
+
