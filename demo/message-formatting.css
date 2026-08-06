@@ -1,0 +1,6 @@
+/* Comfortable long-form assistant answers. */
+.assistant-message > div > p { margin: 0 0 9px; }
+.assistant-message > div > p:last-child { margin-bottom: 5px; }
+.assistant-message > div > ul, .assistant-message > div > ol { margin: 3px 0 10px; padding-left: 18px; }
+.assistant-message > div > li { margin: 4px 0; padding-left: 1px; }
+.assistant-message strong { color: #fff; font-weight: 750; }
