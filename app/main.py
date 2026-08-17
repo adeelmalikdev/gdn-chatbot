@@ -32,9 +32,7 @@ limiter = Limiter(**limiter_kwargs)
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
-    logging.getLogger(__name__).info("Preloading GDN retrieval resources")
-    warm_retrieval_resources(settings)
-    logging.getLogger(__name__).info("GDN retrieval resources are ready")
+    logging.getLogger(__name__).info("GDN Assistant API starting up")
     yield
 
 

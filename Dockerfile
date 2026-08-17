@@ -20,8 +20,11 @@ WORKDIR /app
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PORT=8000 \
-    HF_HOME=/tmp/huggingface \
-    TORCH_HOME=/tmp/torch
+    HF_HOME=/home/appuser/.cache/huggingface \
+    TORCH_HOME=/home/appuser/.cache/torch \
+    OMP_NUM_THREADS=1 \
+    MKL_NUM_THREADS=1 \
+    OPENBLAS_NUM_THREADS=1
 
 RUN groupadd -g 1000 appgroup && \
     useradd -m -u 1000 -g appgroup -s /bin/sh appuser
@@ -32,7 +35,9 @@ COPY app ./app
 COPY scripts ./scripts
 COPY data ./data
 
-RUN mkdir -p /home/appuser/.cache && chown -R appuser:appgroup /home/appuser /app
+RUN mkdir -p /home/appuser/.cache && \
+    python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('BAAI/bge-small-en-v1.5')" && \
+    chown -R appuser:appgroup /home/appuser /app
 
 USER appuser
 
