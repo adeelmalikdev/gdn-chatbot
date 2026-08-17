@@ -34,6 +34,7 @@ COPY --from=builder /usr/local/bin /usr/local/bin
 COPY app ./app
 COPY scripts ./scripts
 COPY data ./data
+COPY demo ./demo
 
 RUN mkdir -p /home/appuser/.cache && \
     python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('BAAI/bge-small-en-v1.5')" && \
