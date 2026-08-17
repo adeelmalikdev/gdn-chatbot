@@ -1,3 +1,54 @@
+function ensureWidgetElements() {
+  if (document.querySelector("#launcher")) return;
+  const container = document.createElement("section");
+  container.className = "chat-widget";
+  container.setAttribute("aria-label", "GDN Assistant");
+  container.innerHTML = `
+    <button class="launcher" id="launcher" aria-label="Open GDN Assistant" aria-expanded="false" style="display: flex; align-items: center; justify-content: center;">
+      <span class="launcher-label">Chat with GDN</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.25a7.25 7.25 0 0 1-7.25 7.25 7.15 7.15 0 0 1-3.18-.74L4 19.25l1.49-4.57A7.24 7.24 0 1 1 20 11.25Z"/><path d="M8.7 11.3h.01M12 11.3h.01M15.3 11.3h.01"/></svg>
+    </button>
+    <div class="panel is-hidden" id="panel">
+      <header class="panel-header">
+        <div class="brand-lockup">
+          <span class="presence-dot"></span>
+          <div><strong>GDN Assistant</strong><small>Typically replies instantly</small></div>
+        </div>
+        <button class="icon-button" id="close" aria-label="Close chat">×</button>
+      </header>
+      <div class="assistant-badge">GLOBAL DIGITAL NEXUS</div>
+      <div class="conversation" id="conversation" aria-live="polite">
+        <article class="message assistant-message">
+          <p>Welcome to Global Digital Nexus.</p>
+          <p>How can we help you transform your business today?</p>
+          <time>Just now</time>
+        </article>
+        <div class="quick-prompts" id="quickPrompts">
+          <button data-prompt="Tell me about your cybersecurity services">Cybersecurity services</button>
+          <button data-prompt="What consulting services do you offer?">Technology consulting</button>
+          <button data-prompt="How can I contact Global Digital Nexus?">Contact GDN</button>
+          <button data-prompt="Tell me about your IFRS 9 solutions">IFRS 9 solutions</button>
+        </div>
+      </div>
+      <form class="composer" id="composer">
+        <label class="sr-only" for="message">Ask GDN a question</label>
+        <input id="message" maxlength="2000" autocomplete="off" placeholder="Type your message..." />
+        <button id="send" type="submit" aria-label="Send message">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21.7 2.3-19 8.1c-1 .43-.9 1.88.16 2.17l7.46 2.04 2.04 7.46c.29 1.06 1.74 1.16 2.17.16l8.1-19c.38-.9-.51-1.8-1.41-1.41ZM12 13l6.72-6.72L13 14l-1 4.34L10.72 14 6.38 12 10 11l7.72-5.72L11 12Z"/></svg>
+        </button>
+      </form>
+      <footer>Powered by <strong>Global Digital Nexus</strong></footer>
+    </div>
+  `;
+  (document.body || document.documentElement).appendChild(container);
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", ensureWidgetElements);
+} else {
+  ensureWidgetElements();
+}
+
 const CHAT_URL = window.GDN_CHAT_URL || "http://127.0.0.1:8000/chat";
 const history = [];
 const panel = document.querySelector("#panel");
