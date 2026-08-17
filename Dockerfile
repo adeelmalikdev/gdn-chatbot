@@ -11,7 +11,7 @@ COPY pyproject.toml ./
 COPY app ./app
 COPY scripts ./scripts
 
-RUN pip install --no-cache-dir .
+RUN pip install --no-cache-dir --extra-index-url https://download.pytorch.org/whl/cpu .
 
 FROM python:3.11-slim AS runner
 
