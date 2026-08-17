@@ -19,10 +19,12 @@ WORKDIR /app
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    PORT=8000
+    PORT=8000 \
+    HF_HOME=/tmp/huggingface \
+    TORCH_HOME=/tmp/torch
 
 RUN groupadd -g 1000 appgroup && \
-    useradd -u 1000 -g appgroup -s /bin/sh appuser
+    useradd -m -u 1000 -g appgroup -s /bin/sh appuser
 
 COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
 COPY --from=builder /usr/local/bin /usr/local/bin
@@ -30,7 +32,7 @@ COPY app ./app
 COPY scripts ./scripts
 COPY data ./data
 
-RUN chown -R appuser:appgroup /app
+RUN mkdir -p /home/appuser/.cache && chown -R appuser:appgroup /home/appuser /app
 
 USER appuser
 
