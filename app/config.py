@@ -17,6 +17,8 @@ class Settings(BaseSettings):
     llm_base_url: str | None = None
     llm_api_key: SecretStr | None = None
     xai_api_key: SecretStr | None = None
+    groq_api_key: SecretStr | None = None
+    mistral_api_key: SecretStr | None = None
     redis_url: str | None = None
     langchain_tracing_v2: bool = False
     langchain_api_key: SecretStr | None = None
@@ -39,13 +41,26 @@ class Settings(BaseSettings):
         return [item.strip().rstrip("/") for item in value.split(",")] if isinstance(value, str) else value
 
     def provider_key(self) -> str:
-        key = self.xai_api_key if self.llm_provider == "xai" else self.llm_api_key
+        if self.llm_provider == "groq":
+            key = self.groq_api_key or self.llm_api_key
+        elif self.llm_provider == "xai":
+            key = self.xai_api_key or self.llm_api_key
+        elif self.llm_provider == "mistral":
+            key = self.mistral_api_key or self.llm_api_key
+        else:
+            key = self.llm_api_key
         if not key:
             raise RuntimeError(f"Missing API key for LLM_PROVIDER={self.llm_provider}")
         return key.get_secret_value()
 
     def provider_base_url(self) -> str | None:
-        return "https://api.x.ai/v1" if self.llm_provider == "xai" else self.llm_base_url
+        if self.llm_provider == "groq":
+            return "https://api.groq.com/openai/v1"
+        elif self.llm_provider == "xai":
+            return "https://api.x.ai/v1"
+        elif self.llm_provider == "mistral":
+            return "https://api.mistral.ai/v1"
+        return self.llm_base_url
 
 
 @lru_cache

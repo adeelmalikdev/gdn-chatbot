@@ -28,8 +28,9 @@ wheels/
 .installed.cfg
 *.egg
 
-# Vector store cache (re-generated via scripts/ingest)
-data/chroma/
+# Vector store directory
+!data/
+!data/.gitkeep
 
 # Evaluation reports output
 evaluations/reports/*.json
