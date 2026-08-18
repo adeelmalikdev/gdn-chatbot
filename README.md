@@ -2,14 +2,14 @@
 
 A secure, enterprise-grade, retrieval-augmented generation (RAG) backend API and embeddable website widget built for [Global Digital Nexus (GDN)](https://globaldigitalnexus.com).
 
-Powered by **FastAPI**, **LangChain**, **Chroma Vector DB**, **HuggingFace Embeddings**, and **Groq** (`llama-3.1-8b-instant`), it answers visitor questions about GDN's services, industries, and expertise with high accuracy, streaming responses, and citation links.
+Powered by **FastAPI**, **LangChain**, **Chroma Vector DB**, **HuggingFace Embeddings**, and **Groq** (`openai/gpt-oss-20b`), it answers visitor questions about GDN's services, industries, and expertise with high accuracy, streaming responses, and citation links.
 
 ---
 
 ## 🌟 Key Features
 
 * **RAG Architecture**: Structure-aware Markdown heading splits, 900-character recursive chunking with overlap, BGE embeddings (`BAAI/bge-small-en-v1.5`), persistent Chroma vector store, and **Max Marginal Relevance (MMR)** retrieval for answer diversity.
-* **Cost-Optimized Model**: Defaulted to Groq free tier (`llama-3.1-8b-instant`) (or configurable to xAI `grok-3-mini`, OpenAI `gpt-4o-mini`, or custom OpenAI-compatible endpoints) for low operational costs and fast responses.
+* **Cost-Optimized Model**: Defaulted to Groq free tier (`openai/gpt-oss-20b`) (or configurable to xAI `grok-3-mini`, OpenAI `gpt-4o-mini`, or custom OpenAI-compatible endpoints) for low operational costs and fast responses.
 * **Real-Time SSE Token Streaming**: Exposes `POST /chat/stream` for real-time, token-by-token streaming responses (~200ms latency).
 * **Multi-Layered Security & Guardrails**:
   * Input prompt injection screening (`reject_prompt_injection`).
@@ -124,7 +124,7 @@ Returns API uptime, active model configuration, and Redis status.
   "status": "healthy",
   "environment": "development",
   "llm_provider": "groq",
-  "llm_model": "llama-3.1-8b-instant",
+  "llm_model": "openai/gpt-oss-20b",
   "redis_configured": false
 }
 ```

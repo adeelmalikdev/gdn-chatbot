@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     environment: str = "development"
     firecrawl_api_key: SecretStr | None = None
     llm_provider: str = "groq"
-    llm_model: str = "llama-3.1-8b-instant"
+    llm_model: str = "openai/gpt-oss-20b"
     llm_base_url: str | None = None
     llm_api_key: SecretStr | None = None
     xai_api_key: SecretStr | None = None

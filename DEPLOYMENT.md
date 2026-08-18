@@ -11,7 +11,7 @@ Create a `.env` file on your production server based on `.env.example`:
 ```ini
 ENVIRONMENT=production
 LLM_PROVIDER=groq
-LLM_MODEL=llama-3.1-8b-instant
+LLM_MODEL=openai/gpt-oss-20b
 GROQ_API_KEY=your_groq_api_key_here
 
 # Redis Rate Limiting (Upstash or Local Redis)
