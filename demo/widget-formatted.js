@@ -4,8 +4,8 @@ function ensureWidgetElements() {
   container.className = "chat-widget";
   container.setAttribute("aria-label", "GDN Assistant");
   container.innerHTML = `
-    <button class="launcher" id="launcher" aria-label="Open GDN Assistant" aria-expanded="false" style="display: flex; align-items: center; justify-content: center;">
-      <span class="launcher-label">Chat with GDN</span>
+    <button class="launcher" id="launcher" aria-label="Open GDN Assistant" aria-expanded="false">
+      <span class="launcher-label">CHAT WITH GDN AI</span>
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.25a7.25 7.25 0 0 1-7.25 7.25 7.15 7.15 0 0 1-3.18-.74L4 19.25l1.49-4.57A7.24 7.24 0 1 1 20 11.25Z"/><path d="M8.7 11.3h.01M12 11.3h.01M15.3 11.3h.01"/></svg>
     </button>
     <div class="panel is-hidden" id="panel">
@@ -216,20 +216,19 @@ async function checkHealth() {
     const healthUrl = CHAT_URL.replace(/\/chat\/?$/, "/health");
     const res = await fetch(healthUrl, { method: "GET" });
     if (res.ok) {
-      const data = await res.json();
-      statusSmall.textContent = `Online (${data.llm_model || "grok-3-mini"})`;
+      statusSmall.textContent = "Typically replies instantly";
     } else {
-      statusSmall.textContent = "API Error";
+      statusSmall.textContent = "Typically replies instantly";
     }
   } catch (e) {
-    statusSmall.textContent = "Offline (start backend API)";
+    statusSmall.textContent = "Typically replies instantly";
   }
 }
 
 checkHealth();
 
 form.addEventListener("submit", event => { event.preventDefault(); const question = input.value.trim(); input.value = ""; ask(question); });
-document.querySelector("#quickPrompts").addEventListener("click", event => { const button = event.target.closest("button"); if (button) ask(button.dataset.prompt); });
-close.addEventListener("click", () => { panel.classList.add("is-hidden"); launcher.style.display = "grid"; launcher.setAttribute("aria-expanded", "false"); });
-launcher.addEventListener("click", () => { panel.classList.remove("is-hidden"); launcher.style.display = "none"; launcher.setAttribute("aria-expanded", "true"); input.focus(); });
+document.querySelector("#quickPrompts")?.addEventListener("click", event => { const button = event.target.closest("button"); if (button) ask(button.dataset.prompt); });
+close.addEventListener("click", () => { panel.classList.add("is-hidden"); launcher.style.setProperty("display", "flex", "important"); launcher.setAttribute("aria-expanded", "false"); });
+launcher.addEventListener("click", () => { panel.classList.remove("is-hidden"); launcher.style.setProperty("display", "none", "important"); launcher.setAttribute("aria-expanded", "true"); input.focus(); });
 

@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: GDN Chatbot Widget (Demo Replicated)
+ * Plugin Name: GDN Chatbot Widget
  * Plugin URI: https://globaldigitalnexus.com
  * Description: 1-to-1 pixel-perfect replication of the GDN Assistant Demo Widget for WordPress.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Global Digital Nexus
  */
 
@@ -39,7 +39,7 @@ add_action('wp_footer', function() {
         background: var(--gdn-red) !important;
         color: #ffffff !important;
         cursor: pointer !important;
-        display: flex !important;
+        display: flex;
         align-items: center !important;
         justify-content: center !important;
         box-shadow: 0 12px 30px #8e0f2c62 !important;
@@ -57,25 +57,27 @@ add_action('wp_footer', function() {
         stroke-linecap: round !important;
         stroke-linejoin: round !important;
       }
+      /* CHAT WITH GDN AI badge visible 24/7 */
       .launcher-label {
         position: absolute !important;
-        right: 72px !important;
+        right: 76px !important;
         white-space: nowrap !important;
-        padding: 9px 12px !important;
+        padding: 9px 14px !important;
         border-radius: 8px !important;
         background: #202a34 !important;
         color: #ffffff !important;
-        font-size: .74rem !important;
+        font-size: .75rem !important;
         font-weight: 700 !important;
-        opacity: 0 !important;
-        transform: translateX(6px) !important;
-        pointer-events: none !important;
-        transition: opacity .15s, transform .15s !important;
-        box-shadow: 0 6px 18px #17212b29 !important;
-      }
-      .launcher:hover .launcher-label {
         opacity: 1 !important;
         transform: none !important;
+        pointer-events: auto !important;
+        box-shadow: 0 6px 18px #17212b29 !important;
+        letter-spacing: 0.04em !important;
+      }
+      /* Hide circular launcher button completely when chat panel is open */
+      .panel:not(.is-hidden) ~ .launcher,
+      .chat-widget:has(.panel:not(.is-hidden)) .launcher {
+        display: none !important;
       }
       .panel {
         width: 382px !important;
@@ -303,10 +305,10 @@ add_action('wp_footer', function() {
       }
     </style>
 
-    <!-- GDN Assistant Demo DOM Structure -->
+    <!-- GDN Assistant DOM Structure -->
     <section class="chat-widget" aria-label="GDN Assistant">
       <button class="launcher" id="gdnLauncher" aria-label="Open GDN Assistant" aria-expanded="false">
-        <span class="launcher-label">Chat with GDN</span>
+        <span class="launcher-label">CHAT WITH GDN AI</span>
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M20 11.25a7.25 7.25 0 0 1-7.25 7.25 7.15 7.15 0 0 1-3.18-.74L4 19.25l1.49-4.57A7.24 7.24 0 1 1 20 11.25Z"/>
           <path d="M8.7 11.3h.01M12 11.3h.01M15.3 11.3h.01"/>
@@ -349,7 +351,7 @@ add_action('wp_footer', function() {
       </div>
     </section>
 
-    <!-- GDN Assistant Demo Pixel-Perfect JavaScript -->
+    <!-- GDN Assistant JavaScript -->
     <script>
       (function() {
         const CHAT_URL = "https://gdn-chatbot.onrender.com/chat";
@@ -519,13 +521,12 @@ add_action('wp_footer', function() {
             const healthUrl = CHAT_URL.replace(/\/chat\/?$/, "/health");
             const res = await fetch(healthUrl, { method: "GET" });
             if (res.ok) {
-              const data = await res.json();
-              statusSmall.textContent = `Online (${data.llm_model || "grok-3-mini"})`;
+              statusSmall.textContent = "Typically replies instantly";
             } else {
-              statusSmall.textContent = "API Error";
+              statusSmall.textContent = "Typically replies instantly";
             }
           } catch (e) {
-            statusSmall.textContent = "Offline (start backend API)";
+            statusSmall.textContent = "Typically replies instantly";
           }
         }
 
@@ -533,8 +534,17 @@ add_action('wp_footer', function() {
 
         form.addEventListener("submit", event => { event.preventDefault(); const question = input.value.trim(); input.value = ""; ask(question); });
         document.querySelector("#gdnQuickPrompts")?.addEventListener("click", event => { const button = event.target.closest("button"); if (button) ask(button.dataset.prompt); });
-        close.addEventListener("click", () => { panel.classList.add("is-hidden"); launcher.style.display = "flex"; launcher.setAttribute("aria-expanded", "false"); });
-        launcher.addEventListener("click", () => { panel.classList.remove("is-hidden"); launcher.style.display = "none"; launcher.setAttribute("aria-expanded", "true"); input.focus(); });
+        close.addEventListener("click", () => {
+          panel.classList.add("is-hidden");
+          launcher.style.setProperty("display", "flex", "important");
+          launcher.setAttribute("aria-expanded", "false");
+        });
+        launcher.addEventListener("click", () => {
+          panel.classList.remove("is-hidden");
+          launcher.style.setProperty("display", "none", "important");
+          launcher.setAttribute("aria-expanded", "true");
+          input.focus();
+        });
       })();
     </script>
     <?php
