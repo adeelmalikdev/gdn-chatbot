@@ -12,8 +12,8 @@ class Settings(BaseSettings):
     app_name: str = "GDN Assistant API"
     environment: str = "development"
     firecrawl_api_key: SecretStr | None = None
-    llm_provider: str = "xai"
-    llm_model: str = "grok-3-mini"
+    llm_provider: str = "groq"
+    llm_model: str = "llama-3.3-70b-versatile"
     llm_base_url: str | None = None
     llm_api_key: SecretStr | None = None
     xai_api_key: SecretStr | None = None

@@ -10,9 +10,9 @@ Create a `.env` file on your production server based on `.env.example`:
 
 ```ini
 ENVIRONMENT=production
-LLM_PROVIDER=xai
-LLM_MODEL=grok-3-mini
-XAI_API_KEY=your_xai_api_key_here
+LLM_PROVIDER=groq
+LLM_MODEL=llama-3.3-70b-versatile
+GROQ_API_KEY=your_groq_api_key_here
 
 # Redis Rate Limiting (Upstash or Local Redis)
 REDIS_URL=redis://redis:6379/0

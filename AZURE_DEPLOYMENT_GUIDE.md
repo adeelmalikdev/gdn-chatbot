@@ -81,9 +81,9 @@ Inside `nano`, set your actual API keys and values:
 
 ```ini
 ENVIRONMENT=production
-LLM_PROVIDER=xai
-LLM_MODEL=grok-3-mini
-XAI_API_KEY=your_actual_xai_api_key_here
+LLM_PROVIDER=groq
+LLM_MODEL=llama-3.3-70b-versatile
+GROQ_API_KEY=your_actual_groq_api_key_here
 
 REDIS_URL=redis://redis:6379/0
 ALLOWED_ORIGINS=https://globaldigitalnexus.com,https://www.globaldigitalnexus.com,http://YOUR_AZURE_PUBLIC_IP
@@ -179,8 +179,8 @@ Expected output:
 {
   "status": "healthy",
   "environment": "production",
-  "llm_provider": "xai",
-  "llm_model": "grok-3-mini",
+  "llm_provider": "groq",
+  "llm_model": "llama-3.3-70b-versatile",
   "redis_configured": true
 }
 ```
