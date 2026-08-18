@@ -82,7 +82,7 @@ Inside `nano`, set your actual API keys and values:
 ```ini
 ENVIRONMENT=production
 LLM_PROVIDER=groq
-LLM_MODEL=llama-3.3-70b-versatile
+LLM_MODEL=llama-3.1-8b-instant
 GROQ_API_KEY=your_actual_groq_api_key_here
 
 REDIS_URL=redis://redis:6379/0
@@ -180,7 +180,7 @@ Expected output:
   "status": "healthy",
   "environment": "production",
   "llm_provider": "groq",
-  "llm_model": "llama-3.3-70b-versatile",
+  "llm_model": "llama-3.1-8b-instant",
   "redis_configured": true
 }
 ```
